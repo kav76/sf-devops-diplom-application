@@ -6,14 +6,14 @@
   tasks:
     - name: Make Helm directory
       ansible.builtin.file:
-        path: '/{{ ansible.user }}/helm'
+        path: '/{{ ansible_user }}/helm'
         state: directory
         mode: '0755'
 
     - name: Copy Helm chart to Kubernetes Master Node
       ansible.builtin.copy:
         src: './helm/*'
-        dest: '/{{ ansible.user }}/helm/'
+        dest: '/{{ ansible_user }}/helm/'
         mode: '0755'
 
     - name: Execute Helm chart
