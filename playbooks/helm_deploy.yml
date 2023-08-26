@@ -1,0 +1,20 @@
+---
+- name: Apply Helm Chart
+  hosts: master
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Make Helm directory
+      ansible.builtin.file:
+        path: '/{{ ansible.user }}/helm'
+        state: directory
+        mode: '0755'
+
+    - name: Copy Helm chart to Kubernetes Master Node
+      ansible.builtin.copy:
+        src: './helm/*'
+        dest: '/{{ ansible.user }}/helm/'
+        mode: '0755'
+
+    - name: Execute Helm chart
+      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ .imageTag }}" testapp /{{ ansible.user }}/helm/

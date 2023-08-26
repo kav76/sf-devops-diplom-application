@@ -1,0 +1,9 @@
+image:
+  repository: kav76/testapp
+  tag: 2.0.0
+
+service:
+  type: NodePort
+  port: 3003
+
+replicaCount: 1

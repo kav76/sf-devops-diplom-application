@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: postgres:13-alpine
+        env:
+        - name: POSTGRES_DB
+          value: tutorial-dev
+        - name: POSTGRES_USER
+          value: vinhle
+        - name: POSTGRES_PASSWORD
+          value: password
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: tutorial-volume
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: tutorial-volume
+        emptyDir: {}

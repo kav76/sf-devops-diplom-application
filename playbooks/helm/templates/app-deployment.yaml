@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 3003
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_NAME
+          value: tutorial-dev
+        - name: DB_USER
+          value: vinhle
+        - name: DB_PASS
+          value: password
