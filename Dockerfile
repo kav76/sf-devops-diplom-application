@@ -23,6 +23,7 @@ COPY ./app /app
 RUN adduser -D user
 
 USER user
+ENTRYPOINT ["tail", "-f", "/dev/null"]
 #CMD ["python", "manage.py", "migrate", "&&", "python", "manage.py", "runserver", "0.0.0.0:3003"]
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:3003"]
 
