@@ -6,7 +6,7 @@
   vars_files:
     - vaulted_vars.txt
   tasks:
-  - name: Execute Helm chart
+  - name: Get Current Git tag
     ansible.builtin.command: git tag --points-at HEAD
     register: tagname
 
