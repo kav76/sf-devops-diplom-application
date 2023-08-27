@@ -11,7 +11,7 @@
     register: tagname
 
   - name: Store Tag to file for the further use
-    ansible.builtin.command: echo "{{ tagname.stdout }}" > '{{ workspace }}'/gittag.txt
+    ansible.builtin.shell: echo "{{ tagname.stdout }}" > '{{ workspace }}'/gittag.txt
 
   - name: Login to Hub.docker.com
     community.docker.docker_login:
