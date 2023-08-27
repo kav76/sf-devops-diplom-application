@@ -15,10 +15,8 @@ spec:
       containers:
       - name: app
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["tail"]
-        args: [-f", "/dev/null"]
-#        command: ["sh"]
-#        args: ["-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:3003"]
+        command: ["sh"]
+        args: ["-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:3003"]
         ports:
         - containerPort: 3003
         env:
@@ -37,4 +35,4 @@ spec:
         - name: app-volume
           hostPath: 
             path: /tmp/app
-            type: DirectoryOrCreate  
+            type: Directory 
