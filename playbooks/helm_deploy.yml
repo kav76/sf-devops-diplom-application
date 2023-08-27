@@ -12,7 +12,7 @@
 
     - name: Copy Helm chart to Kubernetes Master Node
       ansible.builtin.copy:
-        src: '{{ workspace }}/helm/'
+        src: '{{ workspace }}/playbooks/'
         dest: '/tmp/helm/'
         mode: '0755'
 
