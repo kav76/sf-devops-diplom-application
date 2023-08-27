@@ -4,7 +4,6 @@
   gather_facts: true
   become: true
   tasks:
-<<<<<<< HEAD
     - name: Make Helm directory
       ansible.builtin.file:
         path: '/tmp/helm'
@@ -19,19 +18,4 @@
 
     - name: Execute Helm chart
       ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ imageTag }}" testapp /tmp/helm/
-=======
-#    - name: Make Helm directory
-#     ansible.builtin.file:
-#        path: '/tmp/helm'
-#        state: directory
-#        mode: '0755'
 
-    - name: Copy Helm chart to Kubernetes Master Node
-      ansible.builtin.copy:
-        src: './helm'
-        dest: '/tmp/'
-        mode: '0755'
-
-    - name: Execute Helm chart
-      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ .imageTag }}" testapp /tmp/helm/
->>>>>>> ea6b2f1e9066a4076f5db6e2484db1e6df6a8426
