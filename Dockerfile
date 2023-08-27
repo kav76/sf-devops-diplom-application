@@ -20,7 +20,6 @@ WORKDIR /app
 COPY ./app /app
 
 # [Security] Limit the scope of user who run the docker image
-#######
 RUN adduser -D user
 
 USER user
