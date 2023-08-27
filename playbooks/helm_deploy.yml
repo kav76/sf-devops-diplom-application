@@ -17,5 +17,5 @@
         mode: '0755'
 
     - name: Execute Helm chart
-      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ imageTag }}" testapp /tmp/helm/
+      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ imageTag }}" testapp /tmp/helm/helm/
 
