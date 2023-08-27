@@ -23,5 +23,7 @@ COPY ./app /app
 RUN adduser -D user
 
 USER user
+RUN python manage.py migrate
+#CMD ["python", "manage.py", "migrate"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:3003"]
 
-###
