@@ -15,7 +15,7 @@ spec:
       containers:
       - name: app
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command: ["/bin/sh"]
+        command: ["sh"]
         args: ["-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:3003"]
         ports:
         - containerPort: 3003
