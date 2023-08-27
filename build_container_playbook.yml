@@ -1,0 +1,71 @@
+---
+- name: Create App directory
+  hosts: localhost
+  gather_facts: true
+  become: true
+  vars_files:
+    - vaulted_vars.txt
+  tasks:
+  - name: Execute Helm chart
+    ansible.builtin.command: git tag --points-at HEAD
+    register: tagname
+
+  - name: Login to Hub.docker.com
+    community.docker.docker_login:
+      username: 'kav76'
+      password: '{{ passwd }}'
+
+
+  - name: Build an image
+    community.docker.docker_image:
+      build:
+        path: '{{ workspace }}'
+      name: kav76/testapp
+      tag: '{{ tagname.stdout }}'
+      source: build
+      repository: 'kav76/testapp:{{ tagname.stdout }}'
+      push: true
+
+#  - name: Push to docker hub
+#    community.docker.docker_image:
+#      name: 'kav76/testapp:{{ tagname.stdout }}'
+#      repository: 'kav76/testapp:{{ tagname.stdout }}'
+#      push: true
+#      source: local
+
+- name: Create App directory
+  hosts: nodes
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Make App directory
+      ansible.builtin.file:
+        path: '/tmp/app'
+        state: directory
+        mode: '0777'
+    
+    - name: Copy App to Kubernetes Nodes
+      ansible.builtin.copy:
+        src: '{{ workspace }}/app/'
+        dest: '/tmp/app/'
+        mode: '0777'
+
+- name: Apply Helm Chart
+  hosts: master
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Make Helm directory
+      ansible.builtin.file:
+        path: '/tmp/helm'
+        state: directory
+        mode: '0755'
+
+    - name: Copy Helm chart to Kubernetes Master Node
+      ansible.builtin.copy:
+        src: '{{ workspace }}/helm/'
+        dest: '/tmp/helm/'
+        mode: '0755'
+
+    - name: Execute Helm chart
+      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ tagname.stdout }}" testapp /tmp/helm/
