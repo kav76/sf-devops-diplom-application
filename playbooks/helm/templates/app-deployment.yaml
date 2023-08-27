@@ -21,10 +21,10 @@ spec:
         - containerPort: 3003
         env:
         - name: DB_HOST
-          value: db
+          value: "db"
         - name: DB_NAME
-          value: tutorial-dev
+          value: "tutorial-dev"
         - name: DB_USER
-          value: vinhle
+          value: "vinhle"
         - name: DB_PASS
-          value: password
+          value: "password"
