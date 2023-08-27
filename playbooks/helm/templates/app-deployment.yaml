@@ -28,3 +28,11 @@ spec:
           value: "vinhle"
         - name: DB_PASS
           value: "password"
+        volumeMounts:
+            - name: app-volume
+              mountPath: /app
+      volumes: 
+        - name: app-volume
+          hostPath: 
+            path: /tmp
+            type: DirectoryOrCreate  
