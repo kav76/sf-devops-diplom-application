@@ -10,8 +10,8 @@
     ansible.builtin.command: git tag --points-at HEAD
     register: tagname
 
-  - name: Store Tag to file for the further use
-    ansible.builtin.shell: echo "{{ tagname.stdout }}" > '{{ workspace }}'/gittag.txt
+#  - name: Store Tag to file for the further use
+#    ansible.builtin.shell: echo "{{ tagname.stdout }}" > '{{ workspace }}'/gittag.txt
 
   - name: Login to Hub.docker.com
     community.docker.docker_login:
@@ -70,12 +70,12 @@
         dest: '/tmp/helm/'
         mode: '0755'
 
-    - name: Get Git Tag from file
-      ansible.builtin.command: cat '{{ workspace }}'/gittag.txt
-      register: tagname
+#    - name: Get Git Tag from file
+#      ansible.builtin.command: cat '{{ workspace }}'/gittag.txt
+#      register: tagname
 
     - name: Execute Helm chart
-      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ tagname.stdout }}" testapp /tmp/helm/
+      ansible.builtin.shell: helm upgrade --install --namespace default --set image.tag="{{ hostvars['localhost']['tagname'].stdout }}" testapp /tmp/helm/
 
 #    - name: Remove Containerd config
 #      ansible.builtin.file:
